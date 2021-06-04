@@ -6,7 +6,7 @@ class MyTheme {
         primarySwatch: Colors.indigo,
         fontFamily: GoogleFonts.poppins().fontFamily,
         cardColor: Colors.white,
-        canvasColor: creamColor,
+        canvasColor: Colors.indigo[100],
         buttonColor: darkBluishColor,
         accentColor: darkBluishColor,
         appBarTheme: AppBarTheme(

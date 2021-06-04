@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_catalog/Screens/project_details.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -9,6 +10,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  moveToProjectDetail(BuildContext context) {
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                ProjectDetailPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              var begin = Offset(0.0, 1.0);
+              var end = Offset.zero;
+              var tween = Tween(begin: begin, end: end);
+              var offsetAnimation = animation.drive(tween);
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            }));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +60,7 @@ class _HomeState extends State<Home> {
               ),
               GestureDetector(
                 onTap: () {
-                  print("Card is Pressed");
+                  moveToProjectDetail(context);
                 },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
@@ -83,19 +103,19 @@ class _HomeState extends State<Home> {
                               onPressed: () {
                                 final snackBar = SnackBar(
                                   content: Text(
-                                    "This Function is in beta test is not working yet."),
+                                      "This Function is in beta test is not working yet."),
                                   action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Follow SnackBar Ok is pressed");
-                                  },
+                                    label: "Ok",
+                                    textColor: Theme.of(context).canvasColor,
+                                    onPressed: () {
+                                      print("Follow SnackBar Ok is pressed");
+                                    },
                                   ),
                                 );
-        
+
                                 ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                                },
+                                    .showSnackBar(snackBar);
+                              },
                               icon: Icon(CupertinoIcons.add_circled_solid),
                               label: Text("Follow"),
                             )
@@ -142,38 +162,39 @@ class _HomeState extends State<Home> {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    "This Function is in beta test is not working yet."),
-                                  action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Bookmark SnackBar Ok is pressed");
-                                  },
-                                  ),
-                                );
-        
-                                ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                        "This Function is in beta test is not working yet."),
+                                    action: SnackBarAction(
+                                      label: "Ok",
+                                      textColor: Theme.of(context).canvasColor,
+                                      onPressed: () {
+                                        print(
+                                            "Bookmark SnackBar Ok is pressed");
+                                      },
+                                    ),
+                                  );
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 },
                                 icon: Icon(CupertinoIcons.bookmark)),
                             IconButton(
                                 onPressed: () {
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    "This Function is in beta test is not working yet."),
-                                  action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Share SnackBar Ok is pressed");
-                                  },
-                                  ),
-                                );
-        
-                                ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                        "This Function is in beta test is not working yet."),
+                                    action: SnackBarAction(
+                                      label: "Ok",
+                                      textColor: Theme.of(context).canvasColor,
+                                      onPressed: () {
+                                        print("Share SnackBar Ok is pressed");
+                                      },
+                                    ),
+                                  );
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 },
                                 icon: Icon(CupertinoIcons.share)),
                           ],
@@ -228,19 +249,19 @@ class _HomeState extends State<Home> {
                               onPressed: () {
                                 final snackBar = SnackBar(
                                   content: Text(
-                                    "This Function is in beta test is not working yet."),
+                                      "This Function is in beta test is not working yet."),
                                   action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Follow SnackBar Ok is pressed");
-                                  },
+                                    label: "Ok",
+                                    textColor: Theme.of(context).canvasColor,
+                                    onPressed: () {
+                                      print("Follow SnackBar Ok is pressed");
+                                    },
                                   ),
                                 );
-        
+
                                 ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                                },
+                                    .showSnackBar(snackBar);
+                              },
                               icon: Icon(CupertinoIcons.add_circled_solid),
                               label: Text("Follow"),
                             )
@@ -287,38 +308,39 @@ class _HomeState extends State<Home> {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    "This Function is in beta test is not working yet."),
-                                  action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Bookmark SnackBar Ok is pressed");
-                                  },
-                                  ),
-                                );
-        
-                                ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                        "This Function is in beta test is not working yet."),
+                                    action: SnackBarAction(
+                                      label: "Ok",
+                                      textColor: Theme.of(context).canvasColor,
+                                      onPressed: () {
+                                        print(
+                                            "Bookmark SnackBar Ok is pressed");
+                                      },
+                                    ),
+                                  );
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 },
                                 icon: Icon(CupertinoIcons.bookmark)),
                             IconButton(
                                 onPressed: () {
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    "This Function is in beta test is not working yet."),
-                                  action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Share SnackBar Ok is pressed");
-                                  },
-                                  ),
-                                );
-        
-                                ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                        "This Function is in beta test is not working yet."),
+                                    action: SnackBarAction(
+                                      label: "Ok",
+                                      textColor: Theme.of(context).canvasColor,
+                                      onPressed: () {
+                                        print("Share SnackBar Ok is pressed");
+                                      },
+                                    ),
+                                  );
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 },
                                 icon: Icon(CupertinoIcons.share)),
                           ],
@@ -373,19 +395,19 @@ class _HomeState extends State<Home> {
                               onPressed: () {
                                 final snackBar = SnackBar(
                                   content: Text(
-                                    "This Function is in beta test is not working yet."),
+                                      "This Function is in beta test is not working yet."),
                                   action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Follow SnackBar Ok is pressed");
-                                  },
+                                    label: "Ok",
+                                    textColor: Theme.of(context).canvasColor,
+                                    onPressed: () {
+                                      print("Follow SnackBar Ok is pressed");
+                                    },
                                   ),
                                 );
-        
+
                                 ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                                },
+                                    .showSnackBar(snackBar);
+                              },
                               icon: Icon(CupertinoIcons.add_circled_solid),
                               label: Text("Follow"),
                             )
@@ -432,38 +454,39 @@ class _HomeState extends State<Home> {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    "This Function is in beta test is not working yet."),
-                                  action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Bookmark SnackBar Ok is pressed");
-                                  },
-                                  ),
-                                );
-        
-                                ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                        "This Function is in beta test is not working yet."),
+                                    action: SnackBarAction(
+                                      label: "Ok",
+                                      textColor: Theme.of(context).canvasColor,
+                                      onPressed: () {
+                                        print(
+                                            "Bookmark SnackBar Ok is pressed");
+                                      },
+                                    ),
+                                  );
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 },
                                 icon: Icon(CupertinoIcons.bookmark)),
                             IconButton(
                                 onPressed: () {
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    "This Function is in beta test is not working yet."),
-                                  action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Share SnackBar Ok is pressed");
-                                  },
-                                  ),
-                                );
-        
-                                ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                        "This Function is in beta test is not working yet."),
+                                    action: SnackBarAction(
+                                      label: "Ok",
+                                      textColor: Theme.of(context).canvasColor,
+                                      onPressed: () {
+                                        print("Share SnackBar Ok is pressed");
+                                      },
+                                    ),
+                                  );
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 },
                                 icon: Icon(CupertinoIcons.share)),
                           ],
@@ -518,19 +541,19 @@ class _HomeState extends State<Home> {
                               onPressed: () {
                                 final snackBar = SnackBar(
                                   content: Text(
-                                    "This Function is in beta test is not working yet."),
+                                      "This Function is in beta test is not working yet."),
                                   action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Follow SnackBar Ok is pressed");
-                                  },
+                                    label: "Ok",
+                                    textColor: Theme.of(context).canvasColor,
+                                    onPressed: () {
+                                      print("Follow SnackBar Ok is pressed");
+                                    },
                                   ),
                                 );
-        
+
                                 ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                                },
+                                    .showSnackBar(snackBar);
+                              },
                               icon: Icon(CupertinoIcons.add_circled_solid),
                               label: Text("Follow"),
                             )
@@ -577,38 +600,39 @@ class _HomeState extends State<Home> {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    "This Function is in beta test is not working yet."),
-                                  action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Bookmark SnackBar Ok is pressed");
-                                  },
-                                  ),
-                                );
-        
-                                ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                        "This Function is in beta test is not working yet."),
+                                    action: SnackBarAction(
+                                      label: "Ok",
+                                      textColor: Theme.of(context).canvasColor,
+                                      onPressed: () {
+                                        print(
+                                            "Bookmark SnackBar Ok is pressed");
+                                      },
+                                    ),
+                                  );
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 },
                                 icon: Icon(CupertinoIcons.bookmark)),
                             IconButton(
                                 onPressed: () {
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    "This Function is in beta test is not working yet."),
-                                  action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Share SnackBar Ok is pressed");
-                                  },
-                                  ),
-                                );
-        
-                                ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                        "This Function is in beta test is not working yet."),
+                                    action: SnackBarAction(
+                                      label: "Ok",
+                                      textColor: Theme.of(context).canvasColor,
+                                      onPressed: () {
+                                        print("Share SnackBar Ok is pressed");
+                                      },
+                                    ),
+                                  );
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 },
                                 icon: Icon(CupertinoIcons.share)),
                           ],
@@ -663,19 +687,19 @@ class _HomeState extends State<Home> {
                               onPressed: () {
                                 final snackBar = SnackBar(
                                   content: Text(
-                                    "This Function is in beta test is not working yet."),
+                                      "This Function is in beta test is not working yet."),
                                   action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Follow SnackBar Ok is pressed");
-                                  },
+                                    label: "Ok",
+                                    textColor: Theme.of(context).canvasColor,
+                                    onPressed: () {
+                                      print("Follow SnackBar Ok is pressed");
+                                    },
                                   ),
                                 );
-        
+
                                 ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                                },
+                                    .showSnackBar(snackBar);
+                              },
                               icon: Icon(CupertinoIcons.add_circled_solid),
                               label: Text("Follow"),
                             )
@@ -722,38 +746,39 @@ class _HomeState extends State<Home> {
                           children: [
                             IconButton(
                                 onPressed: () {
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    "This Function is in beta test is not working yet."),
-                                  action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Bookmark SnackBar Ok is pressed");
-                                  },
-                                  ),
-                                );
-        
-                                ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                        "This Function is in beta test is not working yet."),
+                                    action: SnackBarAction(
+                                      label: "Ok",
+                                      textColor: Theme.of(context).canvasColor,
+                                      onPressed: () {
+                                        print(
+                                            "Bookmark SnackBar Ok is pressed");
+                                      },
+                                    ),
+                                  );
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 },
                                 icon: Icon(CupertinoIcons.bookmark)),
                             IconButton(
                                 onPressed: () {
-                                final snackBar = SnackBar(
-                                  content: Text(
-                                    "This Function is in beta test is not working yet."),
-                                  action: SnackBarAction(
-                                  label: "Ok",
-                                  textColor: Theme.of(context).canvasColor,
-                                  onPressed: () {
-                                    print("Share SnackBar Ok is pressed");
-                                  },
-                                  ),
-                                );
-        
-                                ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                        "This Function is in beta test is not working yet."),
+                                    action: SnackBarAction(
+                                      label: "Ok",
+                                      textColor: Theme.of(context).canvasColor,
+                                      onPressed: () {
+                                        print("Share SnackBar Ok is pressed");
+                                      },
+                                    ),
+                                  );
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                                 },
                                 icon: Icon(CupertinoIcons.share)),
                           ],

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_catalog/Screens/Home.dart';
 import 'package:project_catalog/Screens/HomePage.dart';
-import 'package:project_catalog/Screens/login_page.dart';
-import 'package:project_catalog/Screens/register_Page.dart';
+import 'package:project_catalog/Screens/project_details.dart';
 import 'package:project_catalog/Screens/test.dart';
 import 'package:project_catalog/utils/themes.dart';
 
@@ -19,13 +17,11 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: MyTheme.lightTheme(context),
       darkTheme: MyTheme.darkTheme(context),
-      initialRoute: "/homePage",
+      initialRoute: "/projectDetailPage",
       routes: {
-        "/": (context) => LoginPage(),
-        "/home": (context) => Home(),
-        "/homePage": (context) => HomePage(),
+        "/": (context) => HomePage(),
         "/testPage": (context) => TestPage(),
-        "/registerPage": (context) => RegisterPage(),
+        "/projectDetailPage": (context) => ProjectDetailPage(),
       },
     );
   }
