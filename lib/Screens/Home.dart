@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -11,6 +12,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).canvasColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -21,7 +23,7 @@ class _HomeState extends State<Home> {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                 child: Container(
                   child: Text(
                     "PROJECT CATALOG",
@@ -36,247 +38,729 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 20,
               ),
-              Container(
-                child: GestureDetector(
-                  onTap: () {
-                    print("Card");
-                  },
+              GestureDetector(
+                onTap: () {
+                  print("Card is Pressed");
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
                   child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Image.asset(
-                              "assets/images/flutter.png",
-                              height: 200,
-                              fit: BoxFit.cover,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            CircleAvatar(
+                              backgroundImage:
+                                  AssetImage("assets/images/profile.jpg"),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Container(
+                              child: Text(
+                                "Ankit Singh",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Theme.of(context).accentColor),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                            ),
+                            ElevatedButton.icon(
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Theme.of(context).buttonColor),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)))),
+                              onPressed: () {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Follow SnackBar Ok is pressed");
+                                  },
+                                  ),
+                                );
+        
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                                },
+                              icon: Icon(CupertinoIcons.add_circled_solid),
+                              label: Text("Follow"),
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                "assets/images/flutter.png",
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
-                          Container(
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
                             child: Text(
                               "Project Catalog",
                               style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).accentColor),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).accentColor,
+                              ),
                             ),
                           ),
-                          Container(
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
                             child: Text(
                               "This App is useful for CSE students to view different project ideas and and also students can share his/her ideas with others students via app.",
                               style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.normal,
-                                  color: Theme.of(context).accentColor),
+                                color: Theme.of(context).accentColor,
+                              ),
                             ),
                           ),
-                          ButtonBar(
-                            children: [
-                              ElevatedButton(
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
                                 onPressed: () {
-                                  print("Read More is pressed");
-                                },
-                                child: Text(
-                                  "Read More",
-                                  style: TextStyle(
-                                    fontSize: 15,
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Bookmark SnackBar Ok is pressed");
+                                  },
                                   ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  final snackBar = SnackBar(
-                                    content: Text(
-                                        "This Function is in beta test is not working yet."),
-                                    action: SnackBarAction(
-                                      label: "Ok",
-                                      textColor: Colors.white,
-                                      onPressed: () {
-                                        print("SnackBar Ok is pressed");
-                                      },
-                                    ),
-                                  );
+                                );
         
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
                                 },
-                                child: Text(
-                                  "Add to Favorite",
-                                  style: TextStyle(
-                                    fontSize: 15,
+                                icon: Icon(CupertinoIcons.bookmark)),
+                            IconButton(
+                                onPressed: () {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Share SnackBar Ok is pressed");
+                                  },
                                   ),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      )),
+                                );
+        
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                                },
+                                icon: Icon(CupertinoIcons.share)),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              Container(
-                child: GestureDetector(
-                  onTap: () {
-                    print("Card");
-                  },
+              GestureDetector(
+                onTap: () {
+                  print("Card is Pressed");
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
                   child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Image.asset(
-                              "assets/images/flutter.png",
-                              height: 200,
-                              fit: BoxFit.cover,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            CircleAvatar(
+                              backgroundImage:
+                                  AssetImage("assets/images/profile.jpg"),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Container(
+                              child: Text(
+                                "Ankit Singh",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Theme.of(context).accentColor),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                            ),
+                            ElevatedButton.icon(
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Theme.of(context).buttonColor),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)))),
+                              onPressed: () {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Follow SnackBar Ok is pressed");
+                                  },
+                                  ),
+                                );
+        
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                                },
+                              icon: Icon(CupertinoIcons.add_circled_solid),
+                              label: Text("Follow"),
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                "assets/images/flutter.png",
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
-                          Container(
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
                             child: Text(
                               "Project Catalog",
                               style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).accentColor),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).accentColor,
+                              ),
                             ),
                           ),
-                          Container(
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
                             child: Text(
                               "This App is useful for CSE students to view different project ideas and and also students can share his/her ideas with others students via app.",
                               style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.normal,
-                                  color: Theme.of(context).accentColor),
+                                color: Theme.of(context).accentColor,
+                              ),
                             ),
                           ),
-                          ButtonBar(
-                            children: [
-                              ElevatedButton(
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
                                 onPressed: () {
-                                  print("Read More is pressed");
-                                },
-                                child: Text(
-                                  "Read More",
-                                  style: TextStyle(
-                                    fontSize: 15,
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Bookmark SnackBar Ok is pressed");
+                                  },
                                   ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  final snackBar = SnackBar(
-                                    content: Text(
-                                        "This Function is in beta test is not working yet."),
-                                    action: SnackBarAction(
-                                      label: "Ok",
-                                      textColor: Colors.white,
-                                      onPressed: () {
-                                        print("SnackBar Ok is pressed");
-                                      },
-                                    ),
-                                  );
+                                );
         
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
                                 },
-                                child: Text(
-                                  "Add to Favorite",
-                                  style: TextStyle(
-                                    fontSize: 15,
+                                icon: Icon(CupertinoIcons.bookmark)),
+                            IconButton(
+                                onPressed: () {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Share SnackBar Ok is pressed");
+                                  },
                                   ),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      )),
+                                );
+        
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                                },
+                                icon: Icon(CupertinoIcons.share)),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
-              Container(
-                child: GestureDetector(
-                  onTap: () {
-                    print("Card");
-                  },
+              GestureDetector(
+                onTap: () {
+                  print("Card is Pressed");
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
                   child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Image.asset(
-                              "assets/images/flutter.png",
-                              height: 200,
-                              fit: BoxFit.cover,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            CircleAvatar(
+                              backgroundImage:
+                                  AssetImage("assets/images/profile.jpg"),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Container(
+                              child: Text(
+                                "Ankit Singh",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Theme.of(context).accentColor),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                            ),
+                            ElevatedButton.icon(
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Theme.of(context).buttonColor),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)))),
+                              onPressed: () {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Follow SnackBar Ok is pressed");
+                                  },
+                                  ),
+                                );
+        
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                                },
+                              icon: Icon(CupertinoIcons.add_circled_solid),
+                              label: Text("Follow"),
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                "assets/images/flutter.png",
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           ),
-                          Container(
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
                             child: Text(
                               "Project Catalog",
                               style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).accentColor),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).accentColor,
+                              ),
                             ),
                           ),
-                          Container(
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
                             child: Text(
                               "This App is useful for CSE students to view different project ideas and and also students can share his/her ideas with others students via app.",
                               style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.normal,
-                                  color: Theme.of(context).accentColor),
+                                color: Theme.of(context).accentColor,
+                              ),
                             ),
                           ),
-                          ButtonBar(
-                            children: [
-                              ElevatedButton(
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
                                 onPressed: () {
-                                  print("Read More is pressed");
-                                },
-                                child: Text(
-                                  "Read More",
-                                  style: TextStyle(
-                                    fontSize: 15,
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Bookmark SnackBar Ok is pressed");
+                                  },
                                   ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  final snackBar = SnackBar(
-                                    content: Text(
-                                        "This Function is in beta test is not working yet."),
-                                    action: SnackBarAction(
-                                      label: "Ok",
-                                      textColor: Colors.white,
-                                      onPressed: () {
-                                        print("SnackBar Ok is pressed");
-                                      },
-                                    ),
-                                  );
+                                );
         
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(snackBar);
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
                                 },
-                                child: Text(
-                                  "Add to Favorite",
-                                  style: TextStyle(
-                                    fontSize: 15,
+                                icon: Icon(CupertinoIcons.bookmark)),
+                            IconButton(
+                                onPressed: () {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Share SnackBar Ok is pressed");
+                                  },
                                   ),
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      )),
+                                );
+        
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                                },
+                                icon: Icon(CupertinoIcons.share)),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  print("Card is Pressed");
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+                  child: Card(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            CircleAvatar(
+                              backgroundImage:
+                                  AssetImage("assets/images/profile.jpg"),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Container(
+                              child: Text(
+                                "Ankit Singh",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Theme.of(context).accentColor),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                            ),
+                            ElevatedButton.icon(
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Theme.of(context).buttonColor),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)))),
+                              onPressed: () {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Follow SnackBar Ok is pressed");
+                                  },
+                                  ),
+                                );
+        
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                                },
+                              icon: Icon(CupertinoIcons.add_circled_solid),
+                              label: Text("Follow"),
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                "assets/images/flutter.png",
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            child: Text(
+                              "Project Catalog",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).accentColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            child: Text(
+                              "This App is useful for CSE students to view different project ideas and and also students can share his/her ideas with others students via app.",
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Bookmark SnackBar Ok is pressed");
+                                  },
+                                  ),
+                                );
+        
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                                },
+                                icon: Icon(CupertinoIcons.bookmark)),
+                            IconButton(
+                                onPressed: () {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Share SnackBar Ok is pressed");
+                                  },
+                                  ),
+                                );
+        
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                                },
+                                icon: Icon(CupertinoIcons.share)),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  print("Card is Pressed");
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+                  child: Card(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            CircleAvatar(
+                              backgroundImage:
+                                  AssetImage("assets/images/profile.jpg"),
+                            ),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Container(
+                              child: Text(
+                                "Ankit Singh",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Theme.of(context).accentColor),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 100,
+                            ),
+                            ElevatedButton.icon(
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Theme.of(context).buttonColor),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)))),
+                              onPressed: () {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Follow SnackBar Ok is pressed");
+                                  },
+                                  ),
+                                );
+        
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                                },
+                              icon: Icon(CupertinoIcons.add_circled_solid),
+                              label: Text("Follow"),
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                "assets/images/flutter.png",
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            child: Text(
+                              "Project Catalog",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).accentColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            child: Text(
+                              "This App is useful for CSE students to view different project ideas and and also students can share his/her ideas with others students via app.",
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Bookmark SnackBar Ok is pressed");
+                                  },
+                                  ),
+                                );
+        
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                                },
+                                icon: Icon(CupertinoIcons.bookmark)),
+                            IconButton(
+                                onPressed: () {
+                                final snackBar = SnackBar(
+                                  content: Text(
+                                    "This Function is in beta test is not working yet."),
+                                  action: SnackBarAction(
+                                  label: "Ok",
+                                  textColor: Theme.of(context).canvasColor,
+                                  onPressed: () {
+                                    print("Share SnackBar Ok is pressed");
+                                  },
+                                  ),
+                                );
+        
+                                ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                                },
+                                icon: Icon(CupertinoIcons.share)),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ],
