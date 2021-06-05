@@ -69,17 +69,11 @@ class _HomeState extends State<Home> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            SizedBox(
-                              width: 10,
-                            ),
                             CircleAvatar(
                               backgroundImage:
                                   AssetImage("assets/images/profile.jpg"),
-                            ),
-                            SizedBox(
-                              width: 15,
                             ),
                             Container(
                               child: Text(
@@ -90,7 +84,7 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             SizedBox(
-                              width: 100,
+                              width: 50,
                             ),
                             ElevatedButton.icon(
                               style: ButtonStyle(

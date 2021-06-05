@@ -25,7 +25,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   google_fonts: ^2.0.0
-  native_pdf_view: ^4.0.1
+  flutter_pdfview: ^1.0.4
+  path_provider:
 
 dev_dependencies:
   flutter_test:
