@@ -53,18 +53,8 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
         ),
         child: Column(
           children: [
-            ElevatedButton(
-              child: Text("Open PDF"),
-              onPressed: () {
-                if (pathPDF.isNotEmpty) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PDFScreen(path: pathPDF),
-                    ),
-                  );
-                }
-              },
+            Container(
+              
             ),
             ElevatedButton(
               onPressed: () {

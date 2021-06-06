@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_catalog/Screens/Home.dart';
 import 'package:project_catalog/Screens/register_Page.dart';
 
@@ -8,6 +13,9 @@ class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
+
+final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+final GoogleSignIn googleSignIn = GoogleSignIn();
 
 class _LoginPageState extends State<LoginPage> {
   String name = "";
@@ -63,152 +71,211 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 35,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-                    child: Container(
-                      child: Text(
-                        "Welcome $name To",
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).accentColor,
-                        ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 35,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                  child: Container(
+                    child: Text(
+                      "Welcome $name To",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).accentColor,
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                    child: Container(
-                      child: Text(
-                        "PROJECT CATALOG",
-                        style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).accentColor,
-                        ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                  child: Container(
+                    child: Text(
+                      "PROJECT CATALOG",
+                      style: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).accentColor,
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 65,
-                  ),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: BorderSide(
-                                  color: Theme.of(context).accentColor,
+                ),
+                SizedBox(
+                  height: 65,
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).accentColor,
+                            ),
+                          ),
+                          hintText: "Enter a username",
+                          labelText: "Username",
+                          icon: Icon(CupertinoIcons.person_crop_circle),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please Enter a username";
+                          } else {
+                            return null;
+                          }
+                        },
+                        onChanged: (value) {
+                          name = value;
+                          setState(() {});
+                        },
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).accentColor,
+                            ),
+                          ),
+                          hintText: "Enter Password",
+                          labelText: "Password",
+                          icon: Icon(CupertinoIcons.lock_circle),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please Enter Password";
+                          } else if (value.length < 8) {
+                            return "Please Enter Minimum Eight Characters Password";
+                          }
+                        },
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(32, 32, 32, 0),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Theme.of(context).buttonColor),
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(15)))),
+                          onPressed: () {
+                            moveToHome(context);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(25, 4, 25, 4),
+                            child: Text(
+                              "Login",
+                              style: TextStyle(fontSize: 17),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(32, 0, 32, 32),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Theme.of(context).buttonColor),
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(15)))),
+                          onPressed: () {
+                            moveToRegister(context);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+                            child: Text(
+                              "Register",
+                              style: TextStyle(fontSize: 17),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Theme.of(context).buttonColor),
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(15)))),
+                          onPressed: () {
+                            moveToRegister(context);
+                          },
+                          child: Padding(
+                              padding: const EdgeInsets.fromLTRB(10, 0, 10, 4),
+                              child: GestureDetector(
+                                onTap: () {
+                                  signInWithGoogle();
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      FontAwesomeIcons.google,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Sign-In With Google",
+                                      style: TextStyle(fontSize: 17),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              hintText: "Enter a username",
-                              labelText: "Username"),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please Enter a username";
-                            } else {
-                              return null;
-                            }
-                          },
-                          onChanged: (value) {
-                            name = value;
-                            setState(() {});
-                          },
+                              )),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).accentColor,
-                              ),
-                            ),
-                            hintText: "Enter Password",
-                            labelText: "Password",
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return "Please Enter Password";
-                            } else if (value.length < 8) {
-                              return "Please Enter Minimum Eight Characters Password";
-                            }
-                          },
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(32, 32, 32, 0),
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    Theme.of(context).buttonColor),
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)))),
-                            onPressed: () {
-                              moveToHome(context);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(25, 4, 25, 4),
-                              child: Text(
-                                "Login",
-                                style: TextStyle(fontSize: 17),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(32, 0, 32, 32),
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                    Theme.of(context).buttonColor),
-                                shape: MaterialStateProperty.all(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)))),
-                            onPressed: () {
-                              moveToRegister(context);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-                              child: Text(
-                                "Register",
-                                style: TextStyle(fontSize: 17),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
         ),
-      );
+      ),
+    );
   }
+}
+
+Future<UserCredential> signInWithGoogle() async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication googleAuth =
+      await googleUser!.authentication;
+
+  // Create a new credential
+  final AuthCredential credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth.accessToken,
+    idToken: googleAuth.idToken,
+  );
+  final User? user =
+      (await FirebaseAuth.instance.signInWithCredential(credential)).user;
+  // Once signed in, return the UserCredential
+  return await FirebaseAuth.instance.signInWithCredential(credential);
 }

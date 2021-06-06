@@ -1,14 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_catalog/Screens/HomePage.dart';
+import 'package:project_catalog/Screens/login_page.dart';
 import 'package:project_catalog/Screens/project_details.dart';
 import 'package:project_catalog/Screens/test.dart';
 import 'package:project_catalog/utils/themes.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await FirebaseAuth.initializeApp();
+  runApp(App());
 }
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -17,10 +21,11 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: MyTheme.lightTheme(context),
       darkTheme: MyTheme.darkTheme(context),
-      initialRoute: "/projectDetailPage",
+      initialRoute: "/loginPage",
       routes: {
         "/": (context) => HomePage(),
         "/testPage": (context) => TestPage(),
+        "/loginPage": (context) => LoginPage(),
         "/projectDetailPage": (context) => ProjectDetailPage(),
       },
     );
