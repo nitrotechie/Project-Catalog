@@ -1,80 +1,96 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_catalog/Screens/Home.dart';
+import 'package:project_catalog/Authentication/login_page.dart';
+import 'package:project_catalog/Screens/Home_Screen.dart';
 import 'package:project_catalog/Screens/add_project.dart';
 import 'package:project_catalog/Screens/favorite.dart';
-import 'package:project_catalog/Screens/login_page.dart';
 import 'package:project_catalog/Screens/search.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class NavBar extends StatefulWidget {
+  const NavBar({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _NavBarState createState() => _NavBarState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _NavBarState extends State<NavBar> {
+  int _selectedIndex = 0;
+  static const List<Widget> _widgetOptions = <Widget>[
+    HomeScreen(),
+    SearchPage(),
+    AddProjectPage(),
+    FavoritePage(),
+    LoginPage(),
+  ];
   @override
   Widget build(BuildContext context) {
-    return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.home),
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
         ),
-        BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.search),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).canvasColor.withOpacity(.5),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 20,
+                color: Colors.black.withOpacity(.1),
+              )
+            ],
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+              child: GNav(
+                rippleColor: Colors.grey[300]!,
+                hoverColor: Colors.grey[100]!,
+                gap: 3,
+                activeColor: Theme.of(context).accentColor,
+                iconSize: 24,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                duration: Duration(milliseconds: 400),
+                tabBackgroundColor: Theme.of(context).canvasColor,
+                tabBackgroundGradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.teal,
+                      Theme.of(context).canvasColor,
+                    ]),
+                tabs: [
+                  GButton(
+                    icon: Icons.home,
+                    text: 'Home',
+                  ),
+                  GButton(
+                    icon: Icons.search,
+                    text: 'Search',
+                  ),
+                  GButton(
+                    icon: Icons.add,
+                    text: 'Add',
+                  ),
+                  GButton(
+                    icon: Icons.bookmark,
+                    text: 'Saved',
+                  ),
+                  GButton(
+                    icon: Icons.person,
+                    text: 'Profile',
+                  ),
+                ],
+                selectedIndex: _selectedIndex,
+                onTabChange: (index) {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                },
+              ),
+            ),
+          ),
         ),
-        BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.add),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.heart),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.person),
-        ),
-      ]),
-      tabBuilder: (context, index) {
-        late final CupertinoTabView returnValue;
-        switch (index) {
-          case 0:
-            returnValue = CupertinoTabView(builder: (context) {
-              return CupertinoPageScaffold(
-                child: Home(),
-              );
-            });
-            break;
-          case 1:
-            returnValue = CupertinoTabView(builder: (context) {
-              return CupertinoPageScaffold(
-                child: SearchPage(),
-              );
-            });
-            break;
-          case 2:
-            returnValue = CupertinoTabView(builder: (context) {
-              return CupertinoPageScaffold(
-                child: AddProjectPage(),
-              );
-            });
-            break;
-            case 3:
-            returnValue = CupertinoTabView(builder: (context) {
-              return CupertinoPageScaffold(
-                child: FavoritePage(),
-              );
-            });
-            break;
-          case 4:
-            returnValue = CupertinoTabView(builder: (context) {
-              return CupertinoPageScaffold(
-                child: LoginPage(),
-              );
-            });
-            break;
-        }
-        return returnValue;
-      },
+      ),
     );
   }
 }

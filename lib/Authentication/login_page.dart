@@ -5,7 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_catalog/Screens/Home.dart';
-import 'package:project_catalog/Screens/register_Page.dart';
+import 'package:project_catalog/Authentication/register_Page.dart';
+import 'package:project_catalog/services/auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,6 +17,8 @@ class LoginPage extends StatefulWidget {
 
 final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
+
+final AuthService _auth = AuthService();
 
 class _LoginPageState extends State<LoginPage> {
   String name = "";
@@ -228,8 +231,10 @@ class _LoginPageState extends State<LoginPage> {
                           child: Padding(
                               padding: const EdgeInsets.fromLTRB(10, 0, 10, 4),
                               child: GestureDetector(
-                                onTap: () {
-                                  signInWithGoogle();
+                                onTap: () async {
+                                  dynamic result =
+                                      await _auth.signInWithGoogle();
+                                  
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -259,23 +264,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-}
-
-Future<UserCredential> signInWithGoogle() async {
-  // Trigger the authentication flow
-  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-  // Obtain the auth details from the request
-  final GoogleSignInAuthentication googleAuth =
-      await googleUser!.authentication;
-
-  // Create a new credential
-  final AuthCredential credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth.accessToken,
-    idToken: googleAuth.idToken,
-  );
-  final User? user =
-      (await FirebaseAuth.instance.signInWithCredential(credential)).user;
-  // Once signed in, return the UserCredential
-  return await FirebaseAuth.instance.signInWithCredential(credential);
 }
