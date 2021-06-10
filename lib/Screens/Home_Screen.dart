@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
               elevation: 0,
               expandedHeight: 80,
               flexibleSpace: FlexibleSpaceBar(
-                titlePadding: EdgeInsets.fromLTRB(0, 0, 100, 0),
+                titlePadding: EdgeInsets.fromLTRB(0, 0, 30, 0),
                 title: Text.rich(TextSpan(children: [
                   TextSpan(
                     text: "   Project",

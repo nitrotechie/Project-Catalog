@@ -41,14 +41,15 @@ class _NavBarState extends State<NavBar> {
           ),
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
               child: GNav(
                 rippleColor: Colors.grey[300]!,
                 hoverColor: Colors.grey[100]!,
                 gap: 3,
                 activeColor: Theme.of(context).accentColor,
                 iconSize: 24,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                 duration: Duration(milliseconds: 400),
                 tabBackgroundColor: Theme.of(context).canvasColor,
                 tabBackgroundGradient: LinearGradient(
