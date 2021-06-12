@@ -9,6 +9,7 @@ class MyTheme {
         canvasColor: Colors.indigo[100],
         buttonColor: darkBluishColor,
         accentColor: darkBluishColor,
+        focusColor: Colors.transparent,
         appBarTheme: AppBarTheme(
           color: Colors.white,
           elevation: 0,
@@ -28,6 +29,7 @@ class MyTheme {
   static ThemeData darkTheme(BuildContext context) => ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.indigo,
+        focusColor: Colors.transparent,
         fontFamily: GoogleFonts.poppins().fontFamily,
         cardColor: Colors.black,
         canvasColor: Colors.grey[900],

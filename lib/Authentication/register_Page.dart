@@ -1,6 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_catalog/Authentication/login_page.dart';
+import 'package:project_catalog/Screens/HomePage.dart';
+import 'package:sign_button/create_button.dart';
+import 'package:sign_button/sign_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project_catalog/services/auth.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -10,6 +16,10 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  final AuthService _auth = AuthService();
   String date = "";
   bool changeButton = false;
 
@@ -46,9 +56,61 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  moveToHome2(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => NavBar(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              var begin = Offset(0.0, 1.0);
+              var end = Offset.zero;
+              var tween = Tween(begin: begin, end: end);
+              var offsetAnimation = animation.drive(tween);
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            }),
+        (route) => false);
+  }
+
+  moveToLogin2(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                LoginPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              var begin = Offset(0.0, 1.0);
+              var end = Offset.zero;
+              var tween = Tween(begin: begin, end: end);
+              var offsetAnimation = animation.drive(tween);
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            }),
+        (route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).canvasColor,
+        toolbarHeight: 40,
+        elevation: 0,
+        actions: [
+          TextButton(
+            onPressed: () {
+              moveToHome2(context);
+            },
+            child: Text("Later"),
+          )
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -57,37 +119,18 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 35,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-                  child: Container(
-                    child: Text(
-                      "Register To",
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).accentColor,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                  child: Container(
-                    child: Text(
-                      "PROJECT CATALOG",
-                      style: TextStyle(
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).accentColor,
-                      ),
+                Center(
+                  child: Text(
+                    "Create an account",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).accentColor,
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 65,
+                  height: 50,
                 ),
                 Form(
                   key: _formKey,
@@ -115,32 +158,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 10,
                       ),
                       TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).accentColor,
-                              ),
-                            ),
-                            hintText: "Enter Your Phone Number",
-                            labelText: "Phone Number"),
-                        validator: (value) {
-                          String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
-                          RegExp regExp = new RegExp(patttern);
-                          if (value == null) {
-                            return "Please Enter Your Phone Number";
-                          } else if (!regExp.hasMatch(value)) {
-                            return "Please Enter A Valid Phone Number";
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -156,27 +173,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             return "Please Enter Your Email Address";
                           } else if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
                             return "Please Enter A Valid Email Address";
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).accentColor,
-                              ),
-                            ),
-                            hintText: "Enter a Username",
-                            labelText: "Username"),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please Enter a username";
                           } else {
                             return null;
                           }
@@ -233,29 +229,56 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                       ),
                       SizedBox(
-                        height: 15,
+                        height: 25,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(32.0),
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
-                                  Theme.of(context).buttonColor),
-                              shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(15)))),
+                      Container(
+                        width: 300,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
+                              colors: [
+                                Colors.teal,
+                                Theme.of(context).canvasColor
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(25)),
+                        child: TextButton(
+                          child: Text(
+                            "Create an account",
+                            style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                              fontSize: 20,
+                            ),
+                          ),
                           onPressed: () {
                             moveToLogin(context);
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-                            child: Text(
-                              "Register",
-                              style: TextStyle(fontSize: 17),
-                            ),
+                        ),
+                      ),
+                      TextButton(
+                        child: Text(
+                          "I already have an account ",
+                          style: TextStyle(
+                            fontSize: 15,
                           ),
                         ),
+                        onPressed: () {
+                          moveToLogin2(context);
+                        },
+                      ),
+                      Divider(
+                        color: Theme.of(context).accentColor,
+                        height: 1,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      SignInButton(
+                        buttonType: ButtonType.google,
+                        onPressed: () async {
+                          dynamic result = await _auth.signInWithGoogle();
+                        },
                       )
                     ],
                   ),

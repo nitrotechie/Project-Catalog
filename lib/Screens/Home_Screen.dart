@@ -33,10 +33,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Theme.of(context).canvasColor,
-        body: CustomScrollView(
+    return Scaffold(
+      backgroundColor: Theme.of(context).canvasColor,
+      body: SafeArea(
+        child: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
               pinned: true,

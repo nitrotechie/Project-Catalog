@@ -24,70 +24,69 @@ class _NavBarState extends State<NavBar> {
   ];
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).canvasColor.withOpacity(.5),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 20,
-                color: Colors.black.withOpacity(.1),
-              )
-            ],
-          ),
-          child: SafeArea(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-              child: GNav(
-                rippleColor: Colors.grey[300]!,
-                hoverColor: Colors.grey[100]!,
-                gap: 3,
-                activeColor: Theme.of(context).accentColor,
-                iconSize: 24,
-                padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-                duration: Duration(milliseconds: 400),
-                tabBackgroundColor: Theme.of(context).canvasColor,
-                tabBackgroundGradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Colors.teal,
-                      Theme.of(context).canvasColor,
-                    ]),
-                tabs: [
-                  GButton(
-                    icon: Icons.home,
-                    text: 'Home',
-                  ),
-                  GButton(
-                    icon: Icons.search,
-                    text: 'Search',
-                  ),
-                  GButton(
-                    icon: Icons.add,
-                    text: 'Add',
-                  ),
-                  GButton(
-                    icon: Icons.bookmark,
-                    text: 'Saved',
-                  ),
-                  GButton(
-                    icon: Icons.person,
-                    text: 'Profile',
-                  ),
-                ],
-                selectedIndex: _selectedIndex,
-                onTabChange: (index) {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                },
-              ),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).canvasColor.withOpacity(.5),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 20,
+              color: Colors.black.withOpacity(.1),
+            )
+          ],
+        ),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+            child: GNav(
+              rippleColor: Colors.grey[300]!,
+              hoverColor: Colors.grey[100]!,
+              gap: 3,
+              activeColor: Theme.of(context).accentColor,
+              iconSize: 24,
+              padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+              duration: Duration(milliseconds: 400),
+              tabBackgroundColor: Theme.of(context).canvasColor,
+              tabBackgroundGradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.teal,
+                    Theme.of(context).canvasColor,
+                  ]),
+              tabs: [
+                GButton(
+                  icon: Icons.home,
+                  text: 'Home',
+                ),
+                GButton(
+                  icon: Icons.search,
+                  text: 'Search',
+                ),
+                GButton(
+                  icon: Icons.add,
+                  text: 'Add',
+                ),
+                GButton(
+                  icon: Icons.bookmark,
+                  text: 'Saved',
+                ),
+                GButton(
+                  icon: Icons.person,
+                  text: 'Profile',
+                ),
+              ],
+              selectedIndex: _selectedIndex,
+              onTabChange: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
             ),
           ),
         ),
