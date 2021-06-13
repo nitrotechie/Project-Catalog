@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_catalog/Authentication/login_page.dart';
+import 'package:project_catalog/Authentication/UserAuth.dart';
 import 'package:project_catalog/Screens/Home_Screen.dart';
 import 'package:project_catalog/Screens/add_project.dart';
 import 'package:project_catalog/Screens/favorite.dart';
@@ -20,7 +20,7 @@ class _NavBarState extends State<NavBar> {
     SearchPage(),
     AddProjectPage(),
     FavoritePage(),
-    LoginPage(),
+    UserAuth(),
   ];
   @override
   Widget build(BuildContext context) {

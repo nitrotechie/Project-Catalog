@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:project_catalog/Authentication/login_page.dart';
 import 'package:project_catalog/Screens/HomePage.dart';
+import 'package:project_catalog/services/Database.dart';
+import 'package:project_catalog/services/helperFunction.dart';
 import 'package:sign_button/create_button.dart';
 import 'package:sign_button/sign_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project_catalog/services/auth.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+import 'login_page.dart';
 
+class RegisterPage extends StatefulWidget {
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
@@ -26,14 +27,34 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
 
+  final TextEditingController nameEdittingController =
+      new TextEditingController();
+  final TextEditingController emailEdittingController =
+      new TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
+  AuthService authService = new AuthService();
+
+  DatabaseMethods databaseMethods = new DatabaseMethods();
   moveToLogin(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
+      Map<String, String> userInfoMap = {
+        "name": nameEdittingController.text,
+        "email": emailEdittingController.text,
+      };
+      HelperFunctions.saveUserNameSharedPreference(nameEdittingController.text);
+      HelperFunctions.saveUserEmailSharedPreference(
+          emailEdittingController.text);
       setState(() {
         changeButton = true;
       });
+      HelperFunctions.saveUserLoggedInSharedPreference(true);
+      authService
+          .signUpWithEmailAndPassword(emailEdittingController.text, _pass.text)
+          .then((value) => print(value));
+      databaseMethods.uploadUserInfo(userInfoMap);
       await Future.delayed(Duration(seconds: 1));
-      await Navigator.push(
+      await Navigator.pushAndRemoveUntil(
           context,
           PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
@@ -48,11 +69,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   position: offsetAnimation,
                   child: child,
                 );
-              }));
-      setState(() {
-        changeButton = false;
-      });
-      Navigator.pop(context);
+              }),
+          (route) => false);
     }
   }
 
@@ -137,6 +155,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Column(
                     children: [
                       TextFormField(
+                        controller: nameEdittingController,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(20),
@@ -158,6 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 10,
                       ),
                       TextFormField(
+                        controller: emailEdittingController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                             border: OutlineInputBorder(
@@ -276,9 +296,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       SignInButton(
                         buttonType: ButtonType.google,
-                        onPressed: () async {
-                          dynamic result = await _auth.signInWithGoogle();
-                        },
+                        onPressed: () async {},
                       )
                     ],
                   ),

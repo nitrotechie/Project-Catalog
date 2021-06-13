@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:project_catalog/Authentication/UserAuth.dart';
 import 'package:project_catalog/Authentication/login_page.dart';
 import 'package:project_catalog/Authentication/register_Page.dart';
 import 'package:project_catalog/Screens/SplashScreen.dart';
@@ -26,7 +27,7 @@ class App extends StatelessWidget {
       routes: {
         "/": (context) => SplashScreen(),
         "/testPage": (context) => TestPage(),
-        "/loginPage": (context) => LoginPage(),
+        "/loginPage": (context) => UserAuth(),
         "/projectDetailPage": (context) => ProjectDetailPage(),
         "/registerPage": (context) => RegisterPage(),
       },

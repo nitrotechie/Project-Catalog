@@ -1,11 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:project_catalog/Screens/Home.dart';
 import 'package:project_catalog/Authentication/register_Page.dart';
 import 'package:project_catalog/Screens/HomePage.dart';
+import 'package:project_catalog/services/Database.dart';
 import 'package:project_catalog/services/auth.dart';
+import 'package:project_catalog/services/helperFunction.dart';
 import 'package:sign_button/constants.dart';
 import 'package:sign_button/create_button.dart';
 
@@ -16,41 +18,50 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-
-
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController emailEdittingController =
+      new TextEditingController();
+  final TextEditingController _pass = TextEditingController();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
-
-  final AuthService _auth = AuthService();
+  DatabaseMethods databaseMethods = new DatabaseMethods();
+  AuthService authService = new AuthService();
   String name = "";
   bool changeButton = false;
+  late QuerySnapshot snapshotUserInfo;
   final _formKey = GlobalKey<FormState>();
   moveToHome(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
+      HelperFunctions.saveUserEmailSharedPreference(
+          emailEdittingController.text);
       setState(() {
         changeButton = true;
       });
-      await Future.delayed(Duration(seconds: 1));
-      await Navigator.push(
-          context,
-          PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) => Home(),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                var begin = Offset(0.0, 1.0);
-                var end = Offset.zero;
-                var tween = Tween(begin: begin, end: end);
-                var offsetAnimation = animation.drive(tween);
-                return SlideTransition(
-                  position: offsetAnimation,
-                  child: child,
-                );
-              }));
-      setState(() {
-        changeButton = false;
+      databaseMethods.getUserInfo(emailEdittingController.text).then((val) {
+        snapshotUserInfo = val;
       });
-      Navigator.pop(context);
+
+      authService
+          .signInWithEmailAndPassword(emailEdittingController.text, _pass.text)
+          .then((value) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    NavBar(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  var begin = Offset(0.0, 1.0);
+                  var end = Offset.zero;
+                  var tween = Tween(begin: begin, end: end);
+                  var offsetAnimation = animation.drive(tween);
+                  return SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  );
+                }),
+            (route) => false);
+      });
     }
   }
 
@@ -91,6 +102,27 @@ class _LoginPageState extends State<LoginPage> {
               );
             }),
         (route) => false);
+  }
+
+  moveToHome3(BuildContext context) {
+    authService.signInWithGoogle().then((value) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) => NavBar(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                var begin = Offset(0.0, 1.0);
+                var end = Offset.zero;
+                var tween = Tween(begin: begin, end: end);
+                var offsetAnimation = animation.drive(tween);
+                return SlideTransition(
+                  position: offsetAnimation,
+                  child: child,
+                );
+              }),
+          (route) => false);
+    });
   }
 
   @override
@@ -151,6 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       TextFormField(
+                        controller: emailEdittingController,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -169,15 +202,12 @@ class _LoginPageState extends State<LoginPage> {
                             return null;
                           }
                         },
-                        onChanged: (value) {
-                          name = value;
-                          setState(() {});
-                        },
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       TextFormField(
+                        controller: _pass,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -189,6 +219,7 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: "Password",
                           icon: Icon(CupertinoIcons.lock_circle),
                         ),
+                        obscureText: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Please Enter Password";
@@ -213,17 +244,16 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             borderRadius: BorderRadius.circular(25)),
                         child: TextButton(
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                              color: Theme.of(context).accentColor,
-                              fontSize: 20,
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                color: Theme.of(context).accentColor,
+                                fontSize: 20,
+                              ),
                             ),
-                          ),
-                          onPressed: () {
-                            moveToHome(context);
-                          },
-                        ),
+                            onPressed: () {
+                              moveToHome(context);
+                            }),
                       ),
                       TextButton(
                         child: Text(
@@ -245,9 +275,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       SignInButton(
                         buttonType: ButtonType.google,
-                        onPressed: () async {
-                          dynamic result = await _auth.signInWithGoogle();
-                        },
+                        onPressed: () {},
                       )
                     ],
                   ),
