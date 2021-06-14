@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_catalog/Screens/settings.dart';
 // import 'package:project_catalog/Screens/edit_profile.dart';
 // import 'package:project_catalog/Screens/settings.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -15,6 +16,26 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _isOpen = false;
   PanelController _panelController = PanelController();
 
+  moveToSettings(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                SettingsPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              var begin = Offset(0.0, 1.0);
+              var end = Offset.zero;
+              var tween = Tween(begin: begin, end: end);
+              var offsetAnimation = animation.drive(tween);
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            }),
+        (route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
               color: Theme.of(context).accentColor,
             ),
             onPressed: () {
-              // Navigator.of(context).pop();
+              moveToSettings(context);
             },
           ),
         ],
