@@ -120,7 +120,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
             _showDialog();
           },
         ),
-        title: Text("Edit Profile"),
+        title: Text("Edit Profile",style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),),
         actions: [
           IconButton(
             icon: Icon(
