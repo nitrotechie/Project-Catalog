@@ -1,71 +1,97 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:project_catalog/Authentication/login_page.dart';
 import 'package:project_catalog/model/user.dart';
 
-class AuthService {
+Future<User> createAccountEmail(
+    String name, String email, String password) async {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  try {
+    User? user = (await _auth.createUserWithEmailAndPassword(
+            email: email, password: password))
+        .user;
+
+    if (user != null) {
+      print("Account created Succesfull");
+
+      // ignore: deprecated_member_use
+      user.updateProfile(displayName: name);
+
+      await _firestore.collection('users').doc(_auth.currentUser!.uid).set({
+        "name": name,
+        "email": email,
+        "status": "Unavalible",
+        "uid": _auth.currentUser!.uid,
+      });
+
+      return user;
+    } else {
+      print("Account creation failed");
+      return user!;
+    }
+  } catch (e) {
+    print(e);
+    return null!;
+  }
+}
+
+Future<User> logInEmail(String email, String password) async {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  try {
+    User? user = (await _auth.signInWithEmailAndPassword(
+            email: email, password: password))
+        .user;
+
+    if (user != null) {
+      print("Login Sucessfull");
+      _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .get()
+          // ignore: deprecated_member_use
+          .then((value) => user.updateProfile(displayName: value['name']));
+      return user;
+    } else {
+      print("Login Failed");
+      return user!;
+    }
+  } catch (e) {
+    print(e);
+    return null!;
+  }
+}
+
+Future<User> googleSign() async {
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  Users? _userFromFirebaseUser(User user) {
-    // ignore: unnecessary_null_comparison
-    return user != null ? Users(userId: user.uid) : null;
-  }
+  GoogleSignInAccount? _googleSignInAccount = await _googleSignIn.signIn();
 
-  // SIgn In with Email And Password
-  Future signInWithEmailAndPassword(String email, String password) async {
-    try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      User? firebaseUser = result.user;
-      return _userFromFirebaseUser(firebaseUser!);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  // Register with Email and Password
-  Future signUpWithEmailAndPassword(String email, String password) async {
-    try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      User? firebaseUser = result.user;
-      return _userFromFirebaseUser(firebaseUser!);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  // Reset Password
-  Future resetPass(String email) async {
-    try {
-      return await _auth.sendPasswordResetEmail(email: email);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  // SignOut
-  Future signOut() async {
-    try {
-      return await signOut();
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  // Sign In With Google
-  Future<UserCredential> signInWithGoogle() async {
-  // Trigger the authentication flow
-  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-  // Obtain the auth details from the request
-  final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
-
-  // Create a new credential
-  final credential = GoogleAuthProvider.credential(
-    accessToken: googleAuth.accessToken,
-    idToken: googleAuth.idToken,
+  var _authentication = await _googleSignInAccount!.authentication;
+  var _credential = GoogleAuthProvider.credential(
+    idToken: _authentication.idToken,
+    accessToken: _authentication.accessToken,
   );
 
-  // Once signed in, return the UserCredential
-  return await FirebaseAuth.instance.signInWithCredential(credential);
+  User? user = (await _auth.signInWithCredential(_credential)).user;
+  return user!;
 }
+
+Future logOut(BuildContext context) async {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
+  try {
+    await _auth.signOut().then((value) {
+      Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
+    });
+  } catch (e) {
+    print("error");
+  }
 }

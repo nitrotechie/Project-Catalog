@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_catalog/Screens/HomePage.dart';
-import 'package:project_catalog/services/Database.dart';
 import 'package:project_catalog/services/helperFunction.dart';
 import 'package:sign_button/create_button.dart';
 import 'package:sign_button/sign_button.dart';
@@ -20,7 +19,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  final AuthService _auth = AuthService();
   String date = "";
   bool changeButton = false;
 
@@ -33,28 +31,20 @@ class _RegisterPageState extends State<RegisterPage> {
       new TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-  AuthService authService = new AuthService();
 
-  DatabaseMethods databaseMethods = new DatabaseMethods();
-  moveToLogin(BuildContext context) async {
+  moveToHome(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      Map<String, String> userInfoMap = {
-        "name": nameEdittingController.text,
-        "email": emailEdittingController.text,
-      };
       HelperFunctions.saveUserNameSharedPreference(nameEdittingController.text);
       HelperFunctions.saveUserEmailSharedPreference(
           emailEdittingController.text);
       setState(() {
         changeButton = true;
       });
+
       HelperFunctions.saveUserLoggedInSharedPreference(true);
-      authService
-          .signUpWithEmailAndPassword(emailEdittingController.text, _pass.text)
-          .then((value) => print(value));
-      databaseMethods.uploadUserInfo(userInfoMap);
-      await Future.delayed(Duration(seconds: 1));
-      await Navigator.pushAndRemoveUntil(
+      createAccountEmail(nameEdittingController.text,
+          emailEdittingController.text, _pass.text);
+      Navigator.pushAndRemoveUntil(
           context,
           PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
@@ -111,6 +101,33 @@ class _RegisterPageState extends State<RegisterPage> {
               );
             }),
         (route) => false);
+  }
+
+  moveToHomeGoogle(BuildContext context) {
+    googleSign().then((user) {
+      // ignore: unnecessary_null_comparison
+      if (user != null) {
+        return Navigator.pushAndRemoveUntil(
+            context,
+            PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    NavBar(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  var begin = Offset(0.0, 1.0);
+                  var end = Offset.zero;
+                  var tween = Tween(begin: begin, end: end);
+                  var offsetAnimation = animation.drive(tween);
+                  return SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  );
+                }),
+            (route) => false);
+      } else {
+        return CircularProgressIndicator.adaptive();
+      }
+    });
   }
 
   @override
@@ -272,7 +289,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           onPressed: () {
-                            moveToLogin(context);
+                            moveToHome(context);
                           },
                         ),
                       ),
@@ -296,7 +313,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       SignInButton(
                         buttonType: ButtonType.google,
-                        onPressed: () async {},
+                        onPressed: () {
+                          moveToHomeGoogle(context);
+                        },
                       )
                     ],
                   ),

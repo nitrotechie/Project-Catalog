@@ -35,6 +35,7 @@ dependencies:
   pdf_render: ^1.0.11
   shared_preferences: ^2.0.6
   sign_button: ^2.0.0
+  sliding_up_panel: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:

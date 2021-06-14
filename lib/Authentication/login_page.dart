@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_catalog/Authentication/register_Page.dart';
 import 'package:project_catalog/Screens/HomePage.dart';
-import 'package:project_catalog/services/Database.dart';
 import 'package:project_catalog/services/auth.dart';
 import 'package:project_catalog/services/helperFunction.dart';
 import 'package:sign_button/constants.dart';
@@ -24,8 +23,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _pass = TextEditingController();
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn googleSignIn = GoogleSignIn();
-  DatabaseMethods databaseMethods = new DatabaseMethods();
-  AuthService authService = new AuthService();
   String name = "";
   bool changeButton = false;
   late QuerySnapshot snapshotUserInfo;
@@ -37,32 +34,24 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         changeButton = true;
       });
-      databaseMethods.getUserInfo(emailEdittingController.text).then((val) {
-        snapshotUserInfo = val;
-      });
-
-      authService
-          .signInWithEmailAndPassword(emailEdittingController.text, _pass.text)
-          .then((value) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    NavBar(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  var begin = Offset(0.0, 1.0);
-                  var end = Offset.zero;
-                  var tween = Tween(begin: begin, end: end);
-                  var offsetAnimation = animation.drive(tween);
-                  return SlideTransition(
-                    position: offsetAnimation,
-                    child: child,
-                  );
-                }),
-            (route) => false);
-      });
     }
+    logInEmail(emailEdittingController.text, _pass.text);
+    Navigator.pushAndRemoveUntil(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => NavBar(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              var begin = Offset(0.0, 1.0);
+              var end = Offset.zero;
+              var tween = Tween(begin: begin, end: end);
+              var offsetAnimation = animation.drive(tween);
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            }),
+        (route) => false);
   }
 
   moveToRegister(BuildContext context) {
@@ -104,24 +93,30 @@ class _LoginPageState extends State<LoginPage> {
         (route) => false);
   }
 
-  moveToHome3(BuildContext context) {
-    authService.signInWithGoogle().then((value) {
-      Navigator.pushAndRemoveUntil(
-          context,
-          PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) => NavBar(),
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                var begin = Offset(0.0, 1.0);
-                var end = Offset.zero;
-                var tween = Tween(begin: begin, end: end);
-                var offsetAnimation = animation.drive(tween);
-                return SlideTransition(
-                  position: offsetAnimation,
-                  child: child,
-                );
-              }),
-          (route) => false);
+  moveToHomeGoogle(BuildContext context) {
+    googleSign().then((user) {
+      // ignore: unnecessary_null_comparison
+      if (user != null) {
+        return Navigator.pushAndRemoveUntil(
+            context,
+            PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    NavBar(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  var begin = Offset(0.0, 1.0);
+                  var end = Offset.zero;
+                  var tween = Tween(begin: begin, end: end);
+                  var offsetAnimation = animation.drive(tween);
+                  return SlideTransition(
+                    position: offsetAnimation,
+                    child: child,
+                  );
+                }),
+            (route) => false);
+      } else {
+        return CircularProgressIndicator.adaptive();
+      }
     });
   }
 
@@ -275,7 +270,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       SignInButton(
                         buttonType: ButtonType.google,
-                        onPressed: () {},
+                        onPressed: () {
+                          moveToHomeGoogle(context);
+                        },
                       )
                     ],
                   ),

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_catalog/Screens/project_details.dart';
+import 'package:project_catalog/services/auth.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -39,6 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    logOut(context);
+                  },
+                  icon: Icon(Icons.exit_to_app_sharp),
+                ),
+              ],
               pinned: true,
               backgroundColor: Theme.of(context).canvasColor,
               elevation: 0,

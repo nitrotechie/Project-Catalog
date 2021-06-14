@@ -3,8 +3,9 @@ import 'package:project_catalog/Authentication/UserAuth.dart';
 import 'package:project_catalog/Screens/Home_Screen.dart';
 import 'package:project_catalog/Screens/add_project.dart';
 import 'package:project_catalog/Screens/favorite.dart';
-import 'package:project_catalog/Screens/search.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:project_catalog/Screens/search.dart';
+import 'package:project_catalog/Screens/search_user.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class NavBar extends StatefulWidget {
 
 class _NavBarState extends State<NavBar> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     SearchPage(),
     AddProjectPage(),
