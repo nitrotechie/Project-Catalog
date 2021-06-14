@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_catalog/Screens/profile_page.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -7,6 +8,26 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  moveToProfile(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                ProfilePage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              var begin = Offset(0.0, 1.0);
+              var end = Offset.zero;
+              var tween = Tween(begin: begin, end: end);
+              var offsetAnimation = animation.drive(tween);
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            }),
+        (route) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +36,7 @@ class _SettingsPageState extends State<SettingsPage> {
         elevation: 1,
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            moveToProfile(context);
           },
           icon: Icon(
             Icons.arrow_back,
@@ -31,7 +52,6 @@ class _SettingsPageState extends State<SettingsPage> {
               "Settings",
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
             ),
-
             SizedBox(
               height: 20,
             ),
@@ -51,7 +71,8 @@ class _SettingsPageState extends State<SettingsPage> {
               ],
             ),
             Divider(
-              height: 15,thickness: 2,
+              height: 15,
+              thickness: 2,
             ),
             SizedBox(
               height: 10,
@@ -69,10 +90,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 Icon(
                   Icons.arrow_forward_ios,
                   color: Colors.grey,
-                  ),
+                ),
               ],
             )
-          ],          
+          ],
         ),
       ),
     );

@@ -35,8 +35,8 @@ class _LoginPageState extends State<LoginPage> {
         changeButton = true;
       });
     }
-    logInEmail(emailEdittingController.text, _pass.text);
-    Navigator.pushAndRemoveUntil(
+    await logInEmail(emailEdittingController.text, _pass.text);
+    changeButton? Navigator.pushAndRemoveUntil(
         context,
         PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) => NavBar(),
@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: child,
               );
             }),
-        (route) => false);
+        (route) => false) : CircularProgressIndicator();
   }
 
   moveToRegister(BuildContext context) {

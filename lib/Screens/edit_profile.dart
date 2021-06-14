@@ -1,16 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project_catalog/Screens/profile_page.dart';
-
-class SettingsUI extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Edit Profile",
-      home: EditProfilePage(),
-    );
-  }
-}
+import 'package:project_catalog/Screens/settings.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -18,10 +10,99 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _name = new TextEditingController();
   final TextEditingController _profession = new TextEditingController();
   final TextEditingController _email = new TextEditingController();
   final TextEditingController _website = new TextEditingController();
+  final firestoreInstance = FirebaseFirestore.instance;
+  bool _isloading = false;
+
+  moveToProfile(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                ProfilePage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              var begin = Offset(0.0, 1.0);
+              var end = Offset.zero;
+              var tween = Tween(begin: begin, end: end);
+              var offsetAnimation = animation.drive(tween);
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            }),
+        (route) => false);
+  }
+
+  moveToProfileDone(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isloading = true;
+      });
+    }
+    Navigator.pushAndRemoveUntil(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                ProfilePage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              var begin = Offset(0.0, 1.0);
+              var end = Offset.zero;
+              var tween = Tween(begin: begin, end: end);
+              var offsetAnimation = animation.drive(tween);
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            }),
+        (route) => false);
+  }
+
+  _showDialog() {
+    if (_formKey.currentContext != null) {
+      return showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              title: Text("Unsaved changes"),
+              content: Text(
+                  "You have unsaved changes. Are you sure you want to cancel!?"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    moveToProfileDone(context);
+                  },
+                  child: Text(
+                    "Yes",
+                    style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    "No",
+                    style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,36 +117,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
             color: Theme.of(context).accentColor,
           ),
           onPressed: () {
-            if (_name.text != null &&
-                _profession.text != null &&
-                _email.text != null &&
-                _website.text != null) {
-              createAlertDialog(BuildContext context) {
-                TextEditingController customController =
-                    TextEditingController();
-                    return showDialog(context: context, builder: (context){
-                      return AlertDialog(
-                        title: Text("Unsaved changes"),
-                        content: Text("You have unsaved changes. Are you sure you want to cancel!?"),
-                        // controller: customController,
-                        actions: <Widget>[
-                          MaterialButton(
-                            elevation: 5.0,
-                            child: Text("Yes cancel!"),
-                            onPressed: () {},
-                            
-
-                          )
-                        ],
-                      );
-                    });
-              }
-            } else {
-              Navigator.of(context).pop(ProfilePage());
-            }
+            _showDialog();
           },
         ),
-        title: Text("Edit Profile                                          "),
+        title: Text("Edit Profile"),
         actions: [
           IconButton(
             icon: Icon(
@@ -133,24 +188,27 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
 //edit profile info section
               SizedBox(height: 25),
-              TextFormField(
-                controller: _name,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                        color: Theme.of(context).accentColor,
+              Form(
+                key: _formKey,
+                child: TextFormField(
+                  controller: _name,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).accentColor,
+                        ),
                       ),
-                    ),
-                    hintText: "Enter a Name",
-                    labelText: "Name"),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Please Enter Your Name";
-                  } else {
-                    return null;
-                  }
-                },
+                      hintText: "Enter a Name",
+                      labelText: "Name"),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please Enter Your Name";
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
               ),
               SizedBox(height: 25),
               TextFormField(

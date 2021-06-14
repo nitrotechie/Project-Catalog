@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_catalog/Screens/edit_profile.dart';
 import 'package:project_catalog/Screens/settings.dart';
 // import 'package:project_catalog/Screens/edit_profile.dart';
 // import 'package:project_catalog/Screens/settings.dart';
@@ -16,8 +17,8 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _isOpen = false;
   PanelController _panelController = PanelController();
 
-  moveToSettings(BuildContext context) {
-    Navigator.pushAndRemoveUntil(
+  moveToSetting(BuildContext context) {
+    Navigator.push(
         context,
         PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
@@ -32,8 +33,26 @@ class _ProfilePageState extends State<ProfilePage> {
                 position: offsetAnimation,
                 child: child,
               );
-            }),
-        (route) => false);
+            }));
+  }
+
+  moveToEditProfile(BuildContext context) {
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                EditProfilePage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              var begin = Offset(0.0, 1.0);
+              var end = Offset.zero;
+              var tween = Tween(begin: begin, end: end);
+              var offsetAnimation = animation.drive(tween);
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            }));
   }
 
   @override
@@ -49,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
               color: Theme.of(context).accentColor,
             ),
             onPressed: () {
-              moveToSettings(context);
+              moveToSetting(context);
             },
           ),
         ],
@@ -191,8 +210,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   : double.infinity,
               child: FlatButton(
                 onPressed: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => EditProfilePage()));
+                  moveToEditProfile(context);
                 },
                 color: Colors.blue,
                 textColor: Colors.white,
