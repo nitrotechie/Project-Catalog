@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_catalog/Screens/edit_profile.dart';
-import 'package:project_catalog/Screens/settings.dart';
+// import 'package:project_catalog/Screens/edit_profile.dart';
+// import 'package:project_catalog/Screens/settings.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -19,17 +19,18 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: _isOpen ? Colors.grey[700] : Theme.of(context).canvasColor,
-        actions:[ IconButton(
-          icon: Icon(
-            Icons.settings,
-            size: 32,
-            color: Theme.of(context).accentColor,
+        backgroundColor: _isOpen ? Colors.grey[700] : Colors.transparent,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              size: 32,
+              color: Theme.of(context).accentColor,
+            ),
+            onPressed: () {
+              // Navigator.of(context).pop();
+            },
           ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
         ],
       ),
       body: Stack(
@@ -41,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/user_default_pic.png"),
+                  image: AssetImage("assets/images/profile.jpg"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -169,8 +170,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   : double.infinity,
               child: FlatButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => EditProfilePage()));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (context) => EditProfilePage()));
                 },
                 color: Colors.blue,
                 textColor: Colors.white,
@@ -282,6 +283,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
 //slipanl handler section
   Widget buildDraghandle() => Center(
         child: Container(
