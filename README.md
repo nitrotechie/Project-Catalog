@@ -1,5 +1,4 @@
 # project_catalog
-by vilaxa
 
 A new Flutter project.
 
