@@ -6,6 +6,8 @@ import 'package:project_catalog/Screens/HomePage.dart';
 import 'package:project_catalog/Screens/Welcome.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'NavBar/NavBar.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 

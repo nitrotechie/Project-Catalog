@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_catalog/Screens/HomePage.dart';
+import 'package:project_catalog/Screens/NavBar/NavBar.dart';
 import 'package:project_catalog/services/helperFunction.dart';
 import 'package:sign_button/create_button.dart';
 import 'package:sign_button/sign_button.dart';

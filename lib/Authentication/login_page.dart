@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_catalog/Authentication/register_Page.dart';
 import 'package:project_catalog/Screens/HomePage.dart';
+import 'package:project_catalog/Screens/Home_Screen.dart';
+import 'package:project_catalog/Screens/NavBar/NavBar.dart';
 import 'package:project_catalog/services/auth.dart';
 import 'package:project_catalog/services/helperFunction.dart';
 import 'package:sign_button/constants.dart';
@@ -78,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.pushAndRemoveUntil(
         context,
         PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => NavBar(),
+            pageBuilder: (context, animation, secondaryAnimation) => HomeScreen(),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               var begin = Offset(0.0, 1.0);

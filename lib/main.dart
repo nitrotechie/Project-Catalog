@@ -9,6 +9,8 @@ import 'package:project_catalog/Screens/project_details.dart';
 import 'package:project_catalog/Screens/test.dart';
 import 'package:project_catalog/utils/themes.dart';
 
+import 'Screens/NavBar/NavBar.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

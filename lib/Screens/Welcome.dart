@@ -5,6 +5,8 @@ import 'package:project_catalog/Authentication/login_page.dart';
 import 'package:project_catalog/Authentication/register_Page.dart';
 import 'package:project_catalog/Screens/HomePage.dart';
 
+import 'NavBar/NavBar.dart';
+
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
