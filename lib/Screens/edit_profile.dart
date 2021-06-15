@@ -44,7 +44,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         _isloading = true;
       });
     }
-    Navigator.pushAndRemoveUntil(
+    Navigator.pushReplacement(
         context,
         PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
@@ -59,8 +59,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 position: offsetAnimation,
                 child: child,
               );
-            }),
-        (route) => false);
+            }));
   }
 
   _showDialog() {

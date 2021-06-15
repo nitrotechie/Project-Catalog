@@ -27,10 +27,10 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
-      ),
+          child: IndexedStack(
+        index: _selectedIndex,
+        children: _widgetOptions,
+      )),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).canvasColor.withOpacity(.5),
