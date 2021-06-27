@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:project_catalog/Authentication/login_page.dart';
-import 'package:project_catalog/model/user.dart';
 
 Future<User> createAccountEmail(
     String name, String email, String password) async {
