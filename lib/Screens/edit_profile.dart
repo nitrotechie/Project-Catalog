@@ -130,7 +130,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               color: Theme.of(context).accentColor,
             ),
             onPressed: () {
-              Navigator.of(context).pop(ProfilePage());
+              (Navigator.of(context).pop(ProfilePage));
             },
           ),
         ],

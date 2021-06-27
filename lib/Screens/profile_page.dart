@@ -82,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/user_default_pic.png"),
+                  image: AssetImage("assets/images/user_pic.jpg"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -104,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
               topLeft: Radius.circular(32),
             ),
             minHeight: MediaQuery.of(context).size.height * 0.36,
-            maxHeight: MediaQuery.of(context).size.height * 0.90,
+            maxHeight: MediaQuery.of(context).size.height * 0.80,
             body: GestureDetector(
               onTap: () => _panelController.close(),
               child: Container(

@@ -5,6 +5,7 @@ import 'package:project_catalog/Authentication/login_page.dart';
 import 'package:project_catalog/Authentication/register_Page.dart';
 import 'package:project_catalog/Screens/HomePage.dart';
 import 'package:project_catalog/Screens/SplashScreen.dart';
+import 'package:project_catalog/Screens/profile_page.dart';
 import 'package:project_catalog/Screens/project_details.dart';
 import 'package:project_catalog/Screens/test.dart';
 import 'package:project_catalog/utils/themes.dart';
