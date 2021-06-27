@@ -97,9 +97,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    "assets/images/logo_2.png",
-                    height: 80,
-                    width: 80,
+                    "assets/images/App_Logo_new.png",
+                    height: 200,
+                    width: 200,
                   ),
                   SizedBox(
                     width: 5,

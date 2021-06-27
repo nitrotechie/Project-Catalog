@@ -27,7 +27,25 @@ class _SettingsPageState extends State<SettingsPage> {
             }),
         (route) => false);
   }
-
+ moveTochange_password(BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                ProfilePage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              var begin = Offset(0.0, 1.0);
+              var end = Offset.zero;
+              var tween = Tween(begin: begin, end: end);
+              var offsetAnimation = animation.drive(tween);
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            }),
+        (route) => false);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,19 +96,29 @@ class _SettingsPageState extends State<SettingsPage> {
               height: 10,
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "change password",
+                  "Change Password",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
                     color: Colors.grey[600],
+                    
                   ),
                 ),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: Colors.grey,
-                ),
+                
+                // Icon(
+                //   Icons.arrow_forward_ios,
+                //   color: Colors.grey,
+                  
+                // ),
+                
+                   Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.green,
+          ),
+          
               ],
             )
           ],

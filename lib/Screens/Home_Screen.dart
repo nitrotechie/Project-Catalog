@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     logOut(context);
                   },
-                  icon: Icon(Icons.exit_to_app_sharp),
+                  icon: Icon(Icons.message_outlined),
                 ),
               ],
               pinned: true,
@@ -100,14 +100,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       CircleAvatar(
                                         backgroundImage: AssetImage(
-                                            "assets/images/profile.jpg"),
+                                            "assets/images/user_default_pic.png"),
                                       ),
                                       SizedBox(
                                         width: 10,
                                       ),
                                       Expanded(
                                         child: Text(
-                                          "Ankit Singh",
+                                          "User Name",
                                           style: TextStyle(
                                               fontSize: 15,
                                               color: Theme.of(context)
@@ -158,9 +158,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
                                         child: Image.asset(
-                                          "assets/images/flutter.png",
-                                          fit: BoxFit.fill,
-                                        ),
+                                            "assets/images/Logo_new.png",
+                                            fit: BoxFit.none),
                                       ),
                                     ),
                                   ),
