@@ -60,8 +60,8 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Image.asset(
                 "assets/images/App_Logo_new.png",
-                height: 300,
-                width: 300,
+                height: 200,
+                width: 200,
               ),
               Text("Project Catalog",
                   textAlign: TextAlign.center,
