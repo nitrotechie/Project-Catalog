@@ -98,8 +98,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 children: [
                   Image.asset(
                     "assets/images/App_Logo_new.png",
-                    height: 200,
-                    width: 200,
+                    height: 80,
+                    width: 80,
                   ),
                   SizedBox(
                     width: 5,
