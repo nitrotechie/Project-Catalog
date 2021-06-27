@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       darkTheme: MyTheme.darkTheme(context),
       initialRoute: "/",
       routes: {
-        "/": (context) => NavBar(),
+        "/": (context) => SplashScreen(),
         "/testPage": (context) => TestPage(),
         "/loginPage": (context) => UserAuth(),
         "/projectDetailPage": (context) => ProjectDetailPage(),
