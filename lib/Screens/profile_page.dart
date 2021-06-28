@@ -58,21 +58,21 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: _isOpen ? Colors.grey[700] : Colors.transparent,
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-              size: 32,
-              color: Theme.of(context).accentColor,
-            ),
-            onPressed: () {
-              moveToSetting(context);
-            },
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: _isOpen ? Colors.transparent : Colors.transparent,
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(
+      //         Icons.settings,
+      //         size: 32,
+      //         color: Theme.of(context).accentColor,
+      //       ),
+      //       onPressed: () {
+      //         moveToSetting(context);
+      //       },
+      //     ),
+      //   ],
+      // ),
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
