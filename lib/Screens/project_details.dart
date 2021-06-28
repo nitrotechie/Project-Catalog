@@ -47,7 +47,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
               width: 400,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/images/flutter.png"),
+                  image: AssetImage("assets/images/Logonew.png"),
                   fit: BoxFit.cover,
                   scale: 1,
                 ),
@@ -80,14 +80,14 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                   width: 10,
                 ),
                 CircleAvatar(
-                  backgroundImage: AssetImage("assets/images/profile.jpg"),
+                  backgroundImage: AssetImage("assets/images/user_default_pic.png"),
                 ),
                 SizedBox(
                   width: 10,
                 ),
                 Expanded(
                   child: Text(
-                    "Ankit Singh",
+                    "User Name",
                     style: TextStyle(
                       fontSize: 15,
                       color: Theme.of(context).accentColor,
