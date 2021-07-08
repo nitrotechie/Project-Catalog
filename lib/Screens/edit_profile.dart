@@ -73,7 +73,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               title: Text("Unsaved changes"),
               content: Text(
-                  "You have unsaved changes. Are you sure you want to cancel!?"),
+                  "You have unsaved changes. Are you sure you want to cancel?"),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -119,9 +119,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
             _showDialog();
           },
         ),
-        title: Text("Edit Profile",style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),),
+        title: Text(
+          "Edit Profile",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
             icon: Icon(
