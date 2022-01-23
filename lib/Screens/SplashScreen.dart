@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project_catalog/Screens/HomePage.dart';
 import 'package:project_catalog/Screens/Welcome.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

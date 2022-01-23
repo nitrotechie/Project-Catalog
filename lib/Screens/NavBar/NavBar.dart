@@ -5,7 +5,6 @@ import 'package:project_catalog/Screens/add_project.dart';
 import 'package:project_catalog/Screens/favorite.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:project_catalog/Screens/search.dart';
-import 'package:project_catalog/Screens/search_user.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
